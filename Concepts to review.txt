@@ -1,0 +1,2 @@
+the 'Design Recipe' for declaring functions
+'Type Contract' for declaring functions
