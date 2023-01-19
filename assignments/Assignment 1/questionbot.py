@@ -112,18 +112,44 @@ def do_homework() -> str:
 # TASK 2: Exclamations
 ####################################
 
-def is_exclamation():
+def is_exclamation(input: str) -> bool:
+    """
+    This function returns a true or false boolean if the inputted string does or does not end with an "!", respectively.
+
+    >>> is_exclamation("doo?")
+    False
+
+    >>> is_exclamation("boo!")
+    True
+
+    >>> is_exclamation("!")
+    True
     """
 
-    """
-    # TODO: complete this function.
+    if input[-1] == "!":
+        return True
+
+    return False
 
 
-def do_exclamation():
+def do_exclamation(sentence: str) -> str:
+    """
+    Using a full sentence as input, this function returns the last word of the input, capitalized, with ' ate my homework' concatenated on the end.
+    
+    >>> do_exclamation("I play with my dog!")
+    'Dog ate my homework.'
+
+    >>> do_exclamation('ding dong!')
+    'Dong ate my homework.'
+
+    >>> do_exclamation('dong!')
+    'Input must be a complete, exclamatory sentence.'
     """
 
-    """
-    # TODO: complete this function.
+    if (count_words(sentence) >= 2) and (is_exclamation(sentence) is True):
+        return get_capitalized_word(get_last_word(sentence)) + "ate my homework."
+
+    return 'Input must be a complete, exclamatory sentence.'
 
 
 ####################################
@@ -166,14 +192,15 @@ def do_helping_verb():
 
 # TODO: write functions is_canadian_question and do_canadian_question.
 def is_canadian_question(question: str) -> bool:
-    """Returns True if an inputted string is a question (if it has a ? at the end) which contains some form of a Canadian word in the sentence ('snow', 'ice', 'hockey').
+    """
+    Returns True if an inputted string is a question (if it has a ? at the end) which contains some form of a Canadian word in the sentence ('snow', 'ice', 'hockey').
     Returns False otherwise.
     
-    >>> is_canadian_question("Do you like hockey?")
+    >>> is_canadian_question("Do you like icecream?")
     True
 
-    >>> is_canadian_question("icecream?")
-    True
+    >>> is_canadian_question("Icecream?")
+    False
 
     >>> is_canadian_question("dookey?")
     False
@@ -189,7 +216,8 @@ def is_canadian_question(question: str) -> bool:
             return True
 
 def do_canadian_question(canadian_question: str) -> str:
-    """Takes a question, returns it with ', eh?' on the end instead of just ? if it's Canadian as per is_canadian_question().
+    """
+    Takes a question, returns it with ', eh?' on the end instead of just ? if it's Canadian as per is_canadian_question().
     
     >>> do_canadian_question('Am I Canadian?')
     'That doesn't sound very Canadian to me, eh.'
