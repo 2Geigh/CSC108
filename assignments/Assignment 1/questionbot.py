@@ -165,6 +165,48 @@ def do_helping_verb():
 ####################################
 
 # TODO: write functions is_canadian_question and do_canadian_question.
+def is_canadian_question(question: str) -> bool:
+    """Returns True if an inputted string is a question (if it has a ? at the end) which contains some form of a Canadian word in the sentence ('snow', 'ice', 'hockey').
+    Returns False otherwise.
+    
+    >>> is_canadian_question("Do you like hockey?")
+    True
+
+    >>> is_canadian_question("icecream?")
+    True
+
+    >>> is_canadian_question("dookey?")
+    False
+
+    >>> is_canadian_question("snow")
+    False
+    """
+    if question[-1] != "?":
+        return False
+
+    for CANADIAN_WORD in [CANADIAN_WORD_1, CANADIAN_WORD_2, CANADIAN_WORD_3]:
+        if CANADIAN_WORD in question:
+            return True
+
+def do_canadian_question(canadian_question: str) -> str:
+    """Takes a question, returns it with ', eh?' on the end instead of just ? if it's Canadian as per is_canadian_question().
+    
+    >>> do_canadian_question('Am I Canadian?')
+    'That doesn't sound very Canadian to me, eh.'
+
+    >>> do_canadian_question('iceream?')
+    'icecream, eh?'
+
+    >>> do_canadian_question('iceream')
+    'That doesn't sound very Canadian to me, eh.'
+    """
+
+
+    if is_canadian_question(canadian_question) is True:
+        return canadian_question[0,len(canadian_question) - 2] + ", eh?"
+
+    return "That doesn't sound very Canadian to me, eh."
+    
 
 
 ####################################
