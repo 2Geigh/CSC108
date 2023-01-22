@@ -345,12 +345,30 @@ def is_question_exclamation(str) -> bool:
     This function returns True if the given string ends with a question exclamation symbol ('?!').
     False otherwise.
 
-    
-        
-        
-        """
+    >>> is_question_exclamation("Eh?!")
+    True
 
-# TODO: write functions is_question_exclamation and do_question_exclamation.
+    >>> is_question_exclamation("Eh!?")
+    False
+    """
+
+    if str[-1] != EXCLAMATION_SYMBOL:
+        return False
+    
+    if str[-2] != QUESTION_SYMBOL:
+        return False
+    
+    return True
+
+def do_question_exclamation(str) -> str:
+    """
+    This function takes in a string ending in "?!" and passes it through do_question as though it ended with "?".
+    """
+
+    if not is_question_exclamation(str):
+        return
+    
+    return do_question(str[:-1])
 
 
 ####################################
