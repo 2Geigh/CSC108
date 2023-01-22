@@ -86,10 +86,13 @@ def contains_homework(sentence: str) -> bool:
     Return whether `sentence` contains the word 'homework', regardless of case.
 
     >>> contains_homework('The dog has eaten my Homework!')
+    True
 
     >>> contains_homework('The dog has eaten my lunch!')
+    False
 
     >>> contains_homework('The dog has eaten my hoMewOrK.')
+    True
 
     """
 
@@ -286,10 +289,66 @@ def do_canadian_question(canadian_question: str) -> str:
 
 # TODO: write functions is_question and do_question.
 
+def is_question(string: str) -> bool:
+    """ This function returns True if the inputed string ends with a question mark ('?')
+    
+    >>> is_question("e")
+    False
+
+    >>> is_question("e?")
+    True
+    """
+
+    if string[-1] == "?":
+        return True
+    return False
+
+def do_question(question: str) -> str:
+    """
+    
+    >>> do_question("Yes! Do you think the pictures are awesome?")
+    'Why do you say "Do" and "awesome"?'
+
+    >>> do_question("Hungry?")
+    'Is hungry the homework topic?'
+
+    >>> do_question("Will you help me with the cleaning?")
+    'The future is opaque.'
+
+    >>> do_question("Can a dog go to the gym?")
+    'Gym is as gym does.'
+    """
+
+    if count_words(question) == 1:
+        return "Is " + get_lowercase_version(question) + " the homework topic?"
+    
+    if get_first_word(question) == "Will":
+        return "The future is opaque."
+    
+    elif get_first_word(question) == "Can":
+        return get_capitalized_word(get_last_word(question)) + " is as " + get_last_word(question) + " does."
+
+    else:
+        if get_lowercase_version(get_first_word(question)) == get_lowercase_version(get_last_word(question)):
+            return "Why do you say " + get_word(question, 1) + "?"
+
+        else:
+            return "Why do you say " + get_word(question, 1) + " and " + get_last_word(question) + "?"
+
 
 ####################################
 # TASK 6: Question Exclamations
 ####################################
+
+def is_question_exclamation(str) -> bool:
+    """ 
+    This function returns True if the given string ends with a question exclamation symbol ('?!').
+    False otherwise.
+
+    
+        
+        
+        """
 
 # TODO: write functions is_question_exclamation and do_question_exclamation.
 
