@@ -286,6 +286,55 @@ def do_canadian_question(canadian_question: str) -> str:
 # TASK 5: Questions
 ####################################
 
+def is_question(sentence: str) -> bool:
+    """Returns true if the sentence ends with a question mark, false otherwise.
+    
+    >>> is_question("")
+    False
+    
+    >>> is_question("?")
+    True
+
+    >>> is_question("eee?!")
+    False
+    """
+
+    return sentence[-1] == QUESTION_SYMBOL
+
+def do_question(question: str) -> str:
+    """
+    Reponds to an inputted question with a statement about the input.
+
+    PRECONDITION: input string must be a question (as verified by is_question() ).
+
+    >>> do_question("Yes! Do you think the pictures are awesome?")
+    'Why do you say "Do" and "awesome"?'
+
+    >>> do_question("Hungry?")
+    'Is hungry the homework topic?'
+
+    >>> do_question("Will you help me with the cleaning?")
+    'The future is opaque.'
+
+    >>> do_question("Can a dog go to the gym?")
+    'Gym is as gym does.'
+    """
+
+    if count_words(question) == 1:
+        return QUESTION_RESPONSE_0A + get_lowercase_version(question) + QUESTION_RESPONSE_0B
+    
+    elif get_word(question, 1) == QUESTION_KEYWORD_1:
+        return QUESTION_RESPONSE_1
+
+    elif get_word(question, 1) == QUESTION_KEYWORD_2:
+        return get_capitalized_word(get_last_word(question)) + QUESTION_RESPONSE_2A + get_last_word(question) + QUESTION_RESPONSE_2B
+
+    else:
+        if get_lowercase_version(get_last_word(question)) == get_lowercase_version(get_first_word(question)):
+            return QUESTION_RESPONSE_3A + get_word(question, 2) + QUESTION_RESPONSE_3C
+        else:
+            QUESTION_RESPONSE_3A + get_word(question, 2) + QUESTION_RESPONSE_3B + get_last_word(question) + QUESTION_RESPONSE_3C
+
 # TODO: write functions is_question and do_question.
 
 def is_question(string: str) -> bool:
@@ -402,6 +451,9 @@ def chat(sentence: str) -> str:
 
     if contains_homework(sentence):
         return do_homework(sentence)
+
+    if is_question_exclamation(sentence):
+        return do_question_exclamation(sentence)
 
     if is_exclamation(sentence):
         return do_exclamation(sentence)
