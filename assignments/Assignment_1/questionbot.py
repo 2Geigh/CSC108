@@ -71,6 +71,8 @@ QUESTION_RESPONSE_3A = 'Why do you say "'
 QUESTION_RESPONSE_3B = '" and "'
 QUESTION_RESPONSE_3C = '"?'
 
+UNMATCHED_RESPONSE = 'What do you mean?'
+
 
 ####################################
 # TASK 1.1: Homework-related Inputs
@@ -426,6 +428,17 @@ def do_question_exclamation(str) -> str:
 # TODO: write function do_unmatched.
 
 
+
+def do_unmatched(sentence: str) -> str:
+    """
+    Returns "What do you mean?"
+    """
+
+    return UNMATCHED_RESPONSE
+
+    
+
+
 ####################################
 # Chat Functionality
 ####################################
@@ -466,6 +479,8 @@ def chat(sentence: str) -> str:
     
     if is_question(sentence):
         return do_question(sentence)
+
+    return do_unmatched(sentence)
     
 
 
