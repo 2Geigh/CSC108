@@ -401,8 +401,20 @@ def chat(sentence: str) -> str:
     """
 
     if contains_homework(sentence):
-        return do_homework()
-    # TODO: write more here to handle other kinds of sentences.
+        return do_homework(sentence)
+
+    if is_exclamation(sentence):
+        return do_exclamation(sentence)
+
+    if contains_helping_verb(sentence):
+        return do_helping_verb(sentence)
+
+    if is_canadian_question(sentence):
+        return do_canadian_question(sentence)
+    
+    if is_question(sentence):
+        return do_question(sentence)
+    
 
 
 if __name__ == '__main__':
