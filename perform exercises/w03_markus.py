@@ -34,6 +34,8 @@ def is_odd(value: int) -> bool:
     True
     """
 
+    return value % 2 != 0
+
 
 def convert_time(hour_24: int) -> int:
     """Return the 12-hour-clock hour that corresponds to the given 
@@ -51,3 +53,8 @@ def convert_time(hour_24: int) -> int:
     3
     """
 
+    if hour_24 % 24 == 0:
+        return 12
+    if hour_24 <= 12:
+        return hour_24
+    return hour_24 - 12

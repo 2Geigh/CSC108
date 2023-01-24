@@ -131,7 +131,7 @@ def is_exclamation(input: str) -> bool:
     True
     """
 
-    if input[-1] == "!":
+    if input[-1] == EXCLAMATION_SYMBOL:
         return True
 
     return False
@@ -152,7 +152,7 @@ def do_exclamation(sentence: str) -> str:
     """
 
     if (count_words(sentence) >= 2) and (is_exclamation(sentence) is True):
-        return get_capitalized_word(get_last_word(sentence)) + "ate my homework."
+        return get_capitalized_word(get_last_word(sentence)) + EXCLAMATION_RESPONSE
 
     return 'Input must be a complete, exclamatory sentence.'
 
@@ -188,7 +188,7 @@ def contains_helping_verb(sentence: str) -> bool:
     >>> contains_helping_verb('The big dog has eaten my notes.')
     False
     """
-    if sentence[-1] != ".":
+    if sentence[-1] != PERIOD:
         return False
 
     #checking if the third word is lowercase
@@ -223,10 +223,10 @@ def do_helping_verb(statement: str) -> bool:
         return "Sentence is either not a statement, or a statement which does not contain a helping verb as its third word."
 
     helping_verb = get_word(statement, 2)
-    remainder = " "
+    remainder = SPACE
 
     for i in np.arange(3, count_words(statement) - 1):
-        remainder = remainder + " " + get_word(statement, i)
+        remainder = remainder + SPACE + get_word(statement, i)
 
     return helping_verb + remainder
 
@@ -254,7 +254,7 @@ def is_canadian_question(question: str) -> bool:
     >>> is_canadian_question("snow")
     False
     """
-    if question[-1] != "?":
+    if question[-1] != QUESTION_SYMBOL:
         return False
 
     for CANADIAN_WORD in [CANADIAN_WORD_1, CANADIAN_WORD_2, CANADIAN_WORD_3]:
@@ -277,8 +277,7 @@ def do_canadian_question(canadian_question: str) -> str:
 
 
     if is_canadian_question(canadian_question) is True:
-        return canadian_question[0,len(canadian_question) - 2] + ", eh?"
-
+        return canadian_question[0,len(canadian_question) - 2] + CANADIAN_RESPONSE
     return "That doesn't sound very Canadian to me, eh."
     
 
@@ -299,7 +298,7 @@ def is_question(string: str) -> bool:
     True
     """
 
-    if string[-1] == "?":
+    if string[-1] == QUESTION_SYMBOL:
         return True
     return False
 
@@ -330,10 +329,10 @@ def do_question(question: str) -> str:
 
     else:
         if get_lowercase_version(get_first_word(question)) == get_lowercase_version(get_last_word(question)):
-            return "Why do you say " + get_word(question, 1) + "?"
+            return "Why do you say " + get_word(question, 1) + QUESTION_SYMBOL
 
         else:
-            return "Why do you say " + get_word(question, 1) + " and " + get_last_word(question) + "?"
+            return "Why do you say " + get_word(question, 1) + " and " + get_last_word(question) + QUESTION_SYMBOL
 
 
 ####################################
