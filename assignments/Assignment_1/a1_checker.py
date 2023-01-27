@@ -57,7 +57,7 @@ class TestChecker:
     def test_do_helping_verb(self) -> None:
         """Function do_helping_verb"""
         self._check(questionbot.do_helping_verb,
-                    ['We are having lunch.'], str)
+                    ['The dog has eaten my notes.'], str)
 
     def test_is_canadian_question(self) -> None:
         """Function is_canadian_question"""
