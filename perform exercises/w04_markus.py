@@ -46,3 +46,28 @@ def is_strong_password(passwd: str) -> bool:
     >>> is_strong_password('Csc108')
     True
     """
+    
+    if len(passwd) < 6:
+        return False
+    
+    lower_count = 0
+    upper_count = 0
+    digit_count = 0
+    
+    for i in passwd:
+        if i.islower():
+            lower_count += 1
+        
+        elif i.isupper():
+            upper_count += 1
+        
+        elif i.isdigit():
+            digit_count += 1
+        
+        else:
+            continue
+    
+    if lower_count == 0 or upper_count == 0 or digit_count == 0:
+        return False
+    
+    return True
