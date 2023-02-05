@@ -1,0 +1,15 @@
+Q1 & Q2
+	sample2 Q1
+	sample5 Q2
+
+Q3 -- Functions, string slicing and concatenation
+	Optional Docstring Exercise worksheet fro Week 3 lectures page
+
+Q4 -- Debugger breakpoints, control flow related to 'if/elif/else' and 'return' statements
+	sample2 Q6
+	sample1 Q2
+
+Q5 -- Figuring out bug in function involving loops (could be for loop or while loop), strings, booleans
+	sample3 Q4
+
+Q6 -- Function Design Recipe, writing proper docstrings, string methods, loops

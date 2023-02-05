@@ -1,0 +1,11 @@
+why does the following code behave the way it does?
+def repeat_string(x):
+    x += x
+    print(x + "_AAAAAAAAA")
+    
+count = "123456789"
+double_count = count
+repeat_string(double_count)
+
+print(count)
+print(double_count)
