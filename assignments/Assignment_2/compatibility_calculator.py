@@ -57,8 +57,24 @@ def count_common_occurrences(word1: str, word2: str) -> int:
     4
     """
 
-    # TODO: design and write the function body
+    letters_in_1 = []
+    letters_in_2 = []
+    
+    for char in word1:
+        if char.isalpha():
+            letters_in_1.append(char.upper())
+    for char in word2:
+        if char.isalpha():
+            letters_in_2.append(char.upper())
+    
+    count = 0
 
+    for char_1 in letters_in_1:
+        if char_1 in letters_in_2:
+            count = count + 1
+    
+    return count
+            
 
 def get_name_compatibility(name1: str, name2: str) -> float:
     """
@@ -77,10 +93,22 @@ def get_name_compatibility(name1: str, name2: str) -> float:
     45.45454545454545
     """
 
-    # TODO: design and write the function body
-    # Note from Bob: maybe you can call helper function
-    # count_common_occurrences twice to do the bulk of the work?
+    A = ((count_common_occurrences(name1, name2))
+         + count_common_occurrences(name2, name1))
 
+    name1_alpha = ''
+    name2_alpha = ''
+
+    for i in name1:
+        if i.isalpha():
+            name1_alpha += i.upper()
+    for i in name2:
+        if i.isalpha():
+            name2_alpha += i.upper()
+    
+    B = len(name1_alpha) + len(name2_alpha)
+
+    return A / B * 100
 
 ###################################################################
 #  TASK 2: BIRTHDAY COMPATIBILITY CALCULATOR
@@ -90,6 +118,7 @@ def get_name_compatibility(name1: str, name2: str) -> float:
 # TASK 2.1 #
 ############
 
+
 def extract_year(bday: str) -> int:
     """
     Return the year within bday that is in the format YYYY/MM/DD.
@@ -97,11 +126,11 @@ def extract_year(bday: str) -> int:
     >>> extract_year('1991/08/02')
     1991
 
-    >>> extract_year('1995/12/22')
-    1995
+    >>> extract_year('2023/02/17')
+    2023
     """
 
-    # TODO: design and write the function body
+    return int(bday[0:4])
 
 
 def extract_month(bday: str) -> int:
@@ -112,25 +141,27 @@ def extract_month(bday: str) -> int:
     8
 
     >>> extract_month('1995/12/22')
-
+    12
     """
-    # TODO: fill in the expected value for the second docstring example above
-
-    # TODO: design and write the function body
+    
+    if bday[5] == '0':
+        return int(bday[6])
+    return int(bday[5:7])
 
 
 def extract_day(bday: str) -> int:
     """
 
     >>> extract_day('1991/08/02')
+    2
 
     >>> extract_day('1995/12/22')
+    22
 
     """
-    # TODO: write the docstring function description above
-    # TODO: fill in the expected values for the docstring examples above
-
-    # TODO: design and write the function body
+    if bday[8] == '0':
+        return int(bday[9])
+    return int(bday[8:10])
 
 
 ############
@@ -153,11 +184,35 @@ def get_numerological_root(num: int) -> int:
     22
 
     >>> get_numerological_root(2002)
+    4
 
     """
-    # TODO: fill in the expected value for the last docstring example above
+    
+    if num in [11, 22]:
+        return num
 
-    # TODO: design and write the function body
+    return_value = 0
+    
+    # first iteration of summing digits
+    for i in str(num):
+        return_value += int(i)
+    # checking if they're greater than 9 or one of the magic numbers
+    # upon first iteration
+    if (return_value in [11, 22] or len(str(return_value)) == 1):
+        
+        return return_value
+    else:
+        # do this forever until the number is one of the magic numbers
+        # or becomes only one digit long
+        while True:
+            new_num = return_value
+            return_value = 0
+
+            for i in str(new_num):
+                return_value += int(i)
+            
+            if return_value in [11, 22] or len(str(return_value)) == 1:
+                return return_value
 
 
 # Note: Bob managed to get this function working.
@@ -186,6 +241,47 @@ def get_bday_numerology_num(bday: str) -> int:
 # TASK 2.3 #
 ############
 
+def merge_numerology_lists(incomplete_numerology_list: list[list]) -> list:
+    """
+    Takes a list of numerology lists and merges them by index.
+    
+    PRECONDITION: incomplete_numerology_list must be sorted in ascending order
+    by index
+    
+    >>> test = [[1, [], [1]], [1, [2], []], [2, [1], []]]
+    >>> merge_numerology_lists(test)
+    [[1, [2], [1]], [2, [1], []]]
+    """
+    final_return_list = incomplete_numerology_list
+    new_final_return_list = []    
+    
+    for n in (1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22):
+        to_append = [n, [], []]
+        
+        # create a list called of_index_n of every sublist with index n
+        of_index_n = []
+        for sublist in final_return_list:
+            if sublist[0] == n:
+                of_index_n.append(sublist)
+        # for every sublist in of_index_n,
+        # extend the second and third elements of to_append
+        for sublist in of_index_n:
+            to_append[1].extend(sublist[1])
+            to_append[2].extend(sublist[2])
+
+        new_final_return_list.append(to_append)
+    
+    new_new_final_return_list = []
+    
+    for sublist in new_final_return_list:
+        if sublist[1] == [] and sublist[2] == []:
+            continue
+        else:
+            new_new_final_return_list.append(sublist)
+
+    return new_new_final_return_list    
+    
+    
 # Note from Bob: Wow this bends my brain! Think it through before starting
 # to program!
 def build_numerology_list(compatibility_data: list[str]) -> list:
@@ -212,11 +308,47 @@ def build_numerology_list(compatibility_data: list[str]) -> list:
 
     >>> test_list = ['1,1,YES', '1,2,YES', '2,3,YES', '3,1,YES','3,2,NO']
     >>> build_numerology_list(test_list)
+    [[1, [1, 2], []], [2, [3], []], [3, [1], [2]]]
 
+    >>> test_list = ['8,7,YES', '4,3,NO', '2,4,YES', '8,3,NO', '8,9,YES']
+    >>> build_numerology_list(test_list)
+    [[2, [4], []], [4, [], [3]], [8, [7, 9], [3]]]
+
+    >>> test_list = ['8,7,YES', '4,3,NO', '3,4,YES', '8,4,YES', '8,3,NO', '8,9,YES', '22,4,YES']
+    >>> build_numerology_list(test_list)
+    [[3, [4], []], [4, [], [3]], [8, [4, 7, 9], [3]], [22, [4], []]]
     """
-    # TODO: fill in the expected value for the last docstring example above
 
-    # TODO: design and write the function body
+    final_return_list = []
+
+    for data_set in compatibility_data:
+        # setting index
+        if data_set[0:2] == '11':
+            index = '11'
+        elif data_set[0:2] == '22':
+            index = '22'
+        else:
+            index = data_set[0]
+
+        # getting child
+        if len(index) >= 2:
+            child = data_set[3]
+        else:
+            child = data_set[2]
+
+        list_to_append = [int(index)]
+        if 'YES' in data_set:
+            list_to_append.append([int(child)])
+            list_to_append.append([])
+        else:
+            list_to_append.append([])
+            list_to_append.append([int(child)])
+
+        final_return_list.append(list_to_append)
+        
+    final_return_list.sort()
+    
+    return merge_numerology_lists(final_return_list)
 
 
 def get_numerology_compatibility(bday_num1: int, bday_num2: int,
@@ -245,12 +377,17 @@ def get_numerology_compatibility(bday_num1: int, bday_num2: int,
     >>> get_numerology_compatibility(3, 6, sample_compatibility)
     100
 
-    >>>
-
+    >>> get_numerology_compatibility(9, 4, sample_compatibility)
+    20
     """
-    # TODO: add a docstring example above for a LOW_COMPATIBILITY result
 
-    # TODO: design and write the function body
+    for sublist in num_compatibility_table:
+        if bday_num1 == sublist[0]:
+            if bday_num2 in sublist[1]:
+                return HIGH_COMPATIBILITY
+            elif bday_num2 in sublist[2]:
+                return LOW_COMPATIBILITY
+    return MID_COMPATIBILITY
 
 
 # NOTE FROM BOB: I'm proud of this function. Don't modify it, I'm pretty sure
@@ -317,7 +454,76 @@ def build_sign_data_list(data_lst: list[str]) -> list:
     True
     """
 
-    # TODO: design and write the function body
+    final_return_list = []
+
+    for string in data_lst:
+        dummy_string = string
+        list_to_append = []
+
+        list_to_append.append(dummy_string[0:dummy_string.find(',')])
+        # first string
+        dummy_string = dummy_string[dummy_string.find(',') + 1:]
+        # remove first string and first comma
+
+        list_to_append.append(int(dummy_string[0:dummy_string.find(',')]))
+        # first number
+        dummy_string = dummy_string[dummy_string.find(',') + 1:]
+        # remove first number and it's respective (the second) comma
+
+        tuple1 = int(dummy_string[0:dummy_string.find(',')])
+        # second number == first tuple1 value
+        dummy_string = dummy_string[dummy_string.find(',') + 1:]
+        # remove second number / first tuple value and it's respective
+        # (the third) comma
+        tuple2 = int(dummy_string[0:dummy_string.find(',')])
+        # third number == second tuple1 value
+        dummy_string = dummy_string[dummy_string.find(',') + 1:]
+        # remove third number / second tuple value and it's respective
+        # (the fourth) comma
+        list_to_append.append((tuple1, tuple2))
+
+        tuple1 = int(dummy_string[0:dummy_string.find(',')])
+        # fourth number == first tuple2 value
+        dummy_string = dummy_string[dummy_string.find(',') + 1:]
+        # remove fourth number / first tuple2 value and it's respective
+        # (the fifth) comma
+        tuple2 = int(dummy_string)  # fifth number is all that remains
+        list_to_append.append((tuple1, tuple2))
+
+        final_return_list.append(list_to_append)
+        
+    return final_return_list
+
+
+def find_possible_months(start: int, end: int) -> list:
+    """
+    Returns a list of the numbers corresponding to the months inclusively
+    inbetween the month start and the month end.
+    
+    >>> find_possible_months(1,12)
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    
+    >>> find_possible_months(10, 2)
+    [10, 11, 12, 1, 2]
+    
+    
+    """
+    if start > end:  # this conditional is to account for
+        # potential turnover from December to January
+        month_list = []
+        for monthss in range(start, 13):
+            month_list.append(monthss)
+        if end == 1:
+            month_list.append(end)
+        else:
+            for monthss in range(1, end + 1):
+                month_list.append(monthss)
+    else:
+        month_list = []
+        for monthss in range(start, end + 1):
+            month_list.append(monthss)
+            
+    return month_list
 
 
 def find_astrological_sign(sign_data: list, month: int, date: int) -> str:
@@ -344,11 +550,28 @@ def find_astrological_sign(sign_data: list, month: int, date: int) -> str:
     'VIR'
 
     >>> find_astrological_sign(data, 1, 15)
-
+    'CAP'
     """
-    # TODO: fill in the expected value for the last docstring example above
 
-    # TODO: design and write the function body
+    for sublist in sign_data:
+        sign = sublist[0]
+        start_month = int(sublist[2][0])
+        end_month = int(sublist[3][0])
+        
+        month_span = find_possible_months(start_month, end_month)
+    
+        start_day = sublist[2][1]
+        end_day = sublist[3][1]
+
+        if month in month_span:
+            if month == start_month:
+                if date >= start_day:
+                    return sign
+            elif month == end_month:
+                if date <= end_day:
+                    return sign
+            else:
+                return sign
 
 
 def get_sign_group(sign_data: list, sign: str) -> int:
@@ -370,16 +593,17 @@ def get_sign_group(sign_data: list, sign: str) -> int:
 
     >>> data = [['FAKE_SIGN', 9000, (1, 2), (3, 4)]]
     >>> get_sign_group(data, 'FAKE_SIGN')
-
+    9000
     """
-    # TODO: fill in the expected value for the last docstring example above
 
-    # TODO: design and write the function body
-
+    for lst in sign_data:
+        if sign == lst[0]:
+            return lst[1]
 
 ############
 # TASK 3.2 #
 ############
+
 
 def find_astrological_compatibility(sign_gp1: int, sign_gp2: int) -> int:
     """
@@ -413,7 +637,33 @@ def find_astrological_compatibility(sign_gp1: int, sign_gp2: int) -> int:
     20
     """
 
-    # TODO: complete this helper function
+    if sign_gp1 == sign_gp2:
+        return HIGH_COMPATIBILITY
+
+    if sign_gp1 in [0, 1]:
+        even_1 = False
+    elif sign_gp1 == 2:
+        even_1 = True
+    elif sign_gp1 % 2 != 0:
+        even_1 = False
+    else:
+        even_1 = True
+
+    if sign_gp2 in [0, 1]:
+        even_2 = False
+    elif sign_gp2 == 2:
+        even_2 = True
+    elif sign_gp2 % 2 != 0:
+        even_2 = False
+    else:
+        even_2 = True
+
+    if even_1 and even_2:
+        return MID_COMPATIBILITY
+    if (not even_1) and (not even_2):
+        return MID_COMPATIBILITY
+    
+    return LOW_COMPATIBILITY
 
 
 # NOTE FROM BOB: I'm proud of this function. Don't modify it, I'm pretty sure
@@ -523,7 +773,15 @@ def calculate_love_score(name1: str, name2: str, bday1: str,
     75.0
     """
 
-    # TODO: complete this function body
+    A = get_name_compatibility(name1, name2)
+    B = (get_bday_numerology_compatibility
+         (build_numerology_list(NUM_COMPATIBILITY_DATA), bday1, bday2))
+    C = (get_bday_sign_compatibility(build_sign_data_list(SIGN_DATA), bday1, 
+                                     bday2))
+    
+    total = A + B + C
+
+    return total // 3
 
 
 if __name__ == "__main__":
