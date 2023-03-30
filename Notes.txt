@@ -1,0 +1,14 @@
+SEARCH ALGORITHMS:
+	Linear Search: compares values in list one-by-one to find first index
+		Runtime n
+	Binary Search: repeatedly divides list in half by comparison with search argument
+		Runtime log(n)
+		List must be sorted
+
+SORTING ALGORITHMS:
+	Bubble Sort: Goes through the list comparing pairs and swapping them if they're not sorted, letting large values bubble to the end
+		Runtime O(n^2)
+	Selection Sort: Repeatedly iterates over list to find smallest value, then swaps it with the first value, then repeating over a smaller subsection
+		Runtime n^2
+	Insertion Sort: Inserts values into a new sorted portion of the list by comparing the value to the portion
+		Runtime n^2

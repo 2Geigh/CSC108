@@ -1,0 +1,25 @@
+Q1 -- Lists (Indexing, slicing, methods, aliasing, mutability), Nested Lists, Dictionaries (keys, values, using an operator)
+	sample2 Q1
+	sample5 Q2
+	TT1 Q1&Q2
+
+Q2 -- Nested loops and nested lists
+	Nested list worksheet from week 6 lecture
+	A2 functions are also good practice for lists and loops
+
+Q3 -- Dictionaries, lists, tuples
+	tuples_dict_practice.py
+
+Q4 -- File reading
+	open
+	read
+	readline
+	string.strip() and string.split()
+
+Q5 -- structured files
+	Week 7 structured files lecture
+		get_treats
+		game dict worksheet
+	Week 7 perform
+	Week 8 perform
+	A3 load_profiles
